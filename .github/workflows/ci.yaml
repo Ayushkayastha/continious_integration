@@ -1,0 +1,32 @@
+name: CI Workflow
+#on push adn pull form main branch run the code
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # github actions installs this OS 
+
+    steps:
+    - name: Checkout code #check the code this can be different but not below
+      uses: actions/checkout@v2 # this tells github action to chekout the code
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9' # tells to set up this version 
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip 
+        pip install pytest streamlit 
+#first we upgrade or install pip and download pytest adn streamlit
+    - name: Run tests
+      run: |
+        pytest _test.py
+#with the help of pytest we run _test.py where we will write all the tests
